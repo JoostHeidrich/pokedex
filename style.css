@@ -1,0 +1,286 @@
+body {
+  margin: 0;
+  background-image: url(img/background.JPG);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-x: center;
+  background-position-y: center;
+  background-attachment: fixed;
+  font-family: "Open Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  text-align: center;
+  margin-left: 128px;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.PokemonInfo {
+  width: 400px;
+  height: 300px;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: right;
+}
+
+.infoContainer {
+  background-color: white;
+  border-radius: 40px;
+  margin-top: -50px;
+  min-height: 100px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.InfoTable {
+  padding-left: 40px;
+  padding-right: 40px;
+  width: 400px;
+}
+
+.InfoTable tr {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pokemonName {
+  text-align: center;
+  font-size: 35px;
+  margin: 0;
+}
+
+.pokemonHeader {
+  border-radius: 40px;
+}
+
+.pokemonCards {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 120px;
+}
+
+.pokemonCard {
+  fill: block;
+  border: 1px solid white;
+  border-radius: 40px;
+  box-shadow: 0px 0px 10px 1px lightslategray;
+  /* filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.5)); */
+}
+
+.pokemonCard :hover {
+  cursor: pointer;
+}
+
+.pokemonCard img {
+  width: 250px;
+}
+
+.openCardStyle {
+  filter: none !important;
+  border-radius: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 0 !important;
+  top: 0px;
+  border: none !important;
+}
+
+.openCardStyle .pokemonHeader {
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+.pokemonCard .pokemonCard {
+  width: 400px;
+}
+
+.hoverPointer :hover {
+  cursor: pointer;
+}
+
+.header {
+  background-color: rgb(218, 218, 218);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  position: fixed;
+  width: 100%;
+}
+
+.header img {
+  padding: 6px;
+  height: 100px;
+  margin-left: 122px;
+}
+
+.header input {
+  background-color: rgb(220, 220, 220);
+  border: 2px solid rgb(127, 127, 127);
+  height: 50px;
+  width: 200px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-right: 128px;
+}
+
+.header input::placeholder {
+  text-align: center;
+  color: black;
+}
+
+.loadMoreContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  width: 300px;
+}
+
+.loadMoreContainer a {
+  color: white;
+  gap: 10px;
+}
+
+.loadMore {
+  background-color: dimgray;
+  border: none;
+  text-align: center;
+  font-size: 32px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  padding: 32px;
+  border-radius: 50px;
+  border: black 1px solid;
+  width: 220px;
+  height: 100px;
+}
+
+.loadMore:hover {
+  width: 230px;
+  height: 110px;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px 1px white;
+}
+
+.menuButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: grey;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+  margin-left: 20px;
+  border: none;
+}
+
+.infoContainerHeader {
+  padding-top: 40px;
+  display: flex;
+  gap: 200px;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  position: absolute;
+}
+
+.openCardImg {
+  display: flex;
+  justify-content: center;
+}
+
+.openCardImg img {
+  width: 300px;
+}
+
+.menu {
+  background-color: grey;
+  padding: 20px;
+  border-radius: 40px;
+  gap: 20px;
+}
+
+.pageInfo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 400px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.placeholder {
+  width: 400px;
+}
+
+.openCardBackground {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+
+#openCard{
+  z-index: 1;
+}
+
+::-webkit-scrollbar {
+  width: 18px;
+  height: 18px;
+}
+
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #808080;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #bdbdbd;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #bdbdbd;
+}
+
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+}
+
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+
+::-webkit-scrollbar-track:active {
+  background: #666666;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
