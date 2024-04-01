@@ -5,6 +5,7 @@ let allRendertPokemon = [];
 
 function init() {
   loadPokemon();
+  AOS.init();
 }
 
 async function loadPokemon() {
@@ -63,7 +64,8 @@ function openStats(i) {
 }
 
 function openAbout(i) {
-  document.getElementById(`pokemonCard${i}`).innerHTML = generateOpenCard(i);
+  document.getElementById(`pokemonCard${i}`).innerHTML =
+    generateOpenCardAgain(i);
   addBackgroundColor(i);
   addAbilities(i);
 }
@@ -71,6 +73,7 @@ function openAbout(i) {
 function generateCard(i) {
   return /*html*/ `
     <div id="pokemonCard${i}"class="hoverPointer pokemonCard">
+    <div class="pokemonCardContainer">
         <div  onclick="openCard(${i})">
             <div class="pokemonHeader pokemonHeader${i}" id="pokemonHeader${i}">
                 <div class="pokemonCardHeader">
@@ -84,6 +87,7 @@ function generateCard(i) {
                       ]["front_default"]
                     }">
                 </div>
+                <div>
         <div>
     `;
 }
@@ -110,7 +114,12 @@ function generateOpenCard(i) {
   let x = i + 1;
   return /*html*/ `
   <div class="openCardBackground" onclick="openCard(${i})"></div>
-<div id="openCard" class="hoverPointer pokemonCard">
+  <div  
+    data-aos="flip-left"
+     data-aos-easing="ease-out-cubic"
+     data-aos-duration="1000"
+      id="openCard"
+       class="hoverPointer pokemonCard">
     <div>
         <div class="pokemonHeader pokemonHeader${i}" id="pokemonHeader${i}">
             <div class="pokemonCardHeader">
@@ -150,6 +159,55 @@ function generateOpenCard(i) {
             </div>
         </div>
     <div>
+`;
+}
+
+function generateOpenCardAgain(i) {
+  let x = i + 1;
+  return /*html*/ `
+<div class="openCardBackground" onclick="openCard(${i})"></div>
+<div id="openCard" class="hoverPointer pokemonCard">
+  <div>
+    <div class="pokemonHeader pokemonHeader${i}" id="pokemonHeader${i}">
+      <div class="pokemonCardHeader">
+        <h2 class="pokemonName">${allRendertPokemon[i]["name"]}</h2>
+        <h2 class="pokemonName">#${x}</h2>
+      </div>
+      <div class="openCardImg">
+        <img
+        src="${allRendertPokemon[i]["sprites"]["other"]["official-artwork"]["front_default"]}">
+      </div>
+    </div>
+
+    <div class="infoContainer">
+      <div class="infoContainerHeader">
+        <a>About</a>
+        <a onclick="openStats(${i})">Stats</a>
+      </div>
+      <div class="PokemonInfo" id="PokemonInfo">
+        <table class="InfoTable">
+          <tr>
+            <td>Species</td>
+            <td>${allRendertPokemon[i]["types"]["0"]["type"]["name"]}</td>
+          </tr>
+          <tr>
+            <td>Height</td>
+            <td>${allRendertPokemon[i]["height"]}</td>
+          </tr>
+          <tr>
+            <td>Weight</td>
+            <td>${allRendertPokemon[i]["weight"]}</td>
+          </tr>
+          <tr>
+            <td>Abilities</td>
+            <td id="ability${i}"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div></div>
+  </div>
+</div>
 `;
 }
 
