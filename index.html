@@ -7,8 +7,9 @@
     <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
     <script src="arrays.js"></script>
+    <script src="script.js"></script>
+    <script src="generateHtml.js"></script>
 
     <link rel="stylesheet" href="style.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
@@ -33,49 +34,9 @@
     <div id="pokemonCards" class="pokemonCards"></div>
 
     <div class="footer">
-      <div class="pageInfo">
-        <button onclick="openMenu()" class="menuButton">
-          <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-          <svg
-            width="40px"
-            height="40px"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4 18L20 18"
-              stroke="#000000"
-              stroke-width="2"
-              stroke-linecap="round"
-            />
-            <path
-              d="M4 12L20 12"
-              stroke="#000000"
-              stroke-width="2"
-              stroke-linecap="round"
-            />
-            <path
-              d="M4 6L20 6"
-              stroke="#000000"
-              stroke-width="2"
-              stroke-linecap="round"
-            />
-          </svg>
-          <!-- <a href="#">Impressum</a>
-        <a href="#">Datenschutz</a> -->
-        </button>
-        <div id="menu" class="menu d-none">
-          <a>Impressum</a>
-          <a>Datemschutz</a>
-        </div>
-      </div>
-
       <div class="loadMoreContainer">
         <button class="loadMore" onclick="loadMorePokemon()">Load more</button>
       </div>
-
-      <div class="placeholder"></div>
     </div>
   </body>
 </html>

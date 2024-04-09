@@ -2,22 +2,27 @@ let currentPokemon;
 let rendertPokemon = 21;
 let currentPokemonCount = 1;
 let allRendertPokemon = [];
+let waiting = false;
 
 function init() {
-  loadPokemon();
+  this.loadPokemon();
   AOS.init();
 }
 
 async function loadPokemon() {
-  for (let i = currentPokemonCount; i < rendertPokemon; i++) {
-    if (i < 1026) {
-      let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-      let response = await fetch(url);
-      currentPokemon = await response.json();
-      allRendertPokemon.push(currentPokemon);
-      renderPokemonInfo(i);
-      search();
+  if (waiting == false) {
+    waiting = true;
+    for (let i = currentPokemonCount; i < rendertPokemon; i++) {
+      if (i < 1026) {
+        let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+        let response = await fetch(url);
+        currentPokemon = await response.json();
+        allRendertPokemon.push(currentPokemon);
+        renderPokemonInfo(i);
+        search();
+      }
     }
+    waiting = false;
   }
 }
 
@@ -35,9 +40,9 @@ function renderPokemonInfo(i) {
 }
 
 function addAbilities(i) {
-  for (let x = 0; x < allRendertPokemon[i]["abilities"].length; x++) {
+  for (let x = 1; x < allRendertPokemon[i]["abilities"].length; x++) {
     let content = document.getElementById(`ability${i}`);
-    content.innerHTML += `${allRendertPokemon[i]["abilities"][x]["ability"]["name"]}, `;
+    content.innerHTML += `, ${allRendertPokemon[i]["abilities"][x]["ability"]["name"]}`;
   }
 }
 
@@ -70,174 +75,16 @@ function openAbout(i) {
   addAbilities(i);
 }
 
-function generateCard(i) {
-  return /*html*/ `
-    <div id="pokemonCard${i}"class="hoverPointer pokemonCard">
-    <div class="pokemonCardContainer">
-        <div  onclick="openCard(${i})">
-            <div class="pokemonHeader pokemonHeader${i}" id="pokemonHeader${i}">
-                <div class="pokemonCardHeader">
-                    <h2 class="pokemonName">${allRendertPokemon[i]["name"]}</h2>
-                    <h2 class="pokemonName">#${i + 1}</h2>
-                </div>
-                <div>
-                    <img src="${
-                      allRendertPokemon[i]["sprites"]["other"][
-                        "official-artwork"
-                      ]["front_default"]
-                    }">
-                </div>
-                <div>
-        <div>
-    `;
+function capitalizeFirstLetter(word) {
+  if (typeof word !== "string" || word.length === 0) {
+    return "Ungültige Eingabe";
+  }
+  return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-function generateCardAgain(i) {
-  return /*html*/ `
-        <div  onclick="openCard(${i})">
-            <div class="pokemonHeader pokemonHeader${i}" id="pokemonHeader${i}">
-                <div class="pokemonCardHeader">
-                    <h2 class="pokemonName">${allRendertPokemon[i]["name"]}</h2>
-                    <h2 class="pokemonName">#${i + 1}</h2>
-                </div>
-                <div>
-                    <img src="${
-                      allRendertPokemon[i]["sprites"]["other"][
-                        "official-artwork"
-                      ]["front_default"]
-                    }">
-                </div>
-    `;
-}
-
-function generateOpenCard(i) {
-  let x = i + 1;
-  return /*html*/ `
-  <div class="openCardBackground" onclick="openCard(${i})"></div>
-  <div  
-    data-aos="flip-left"
-     data-aos-easing="ease-out-cubic"
-     data-aos-duration="1000"
-      id="openCard"
-       class="hoverPointer pokemonCard">
-    <div>
-        <div class="pokemonHeader pokemonHeader${i}" id="pokemonHeader${i}">
-            <div class="pokemonCardHeader">
-                <h2 class="pokemonName">${allRendertPokemon[i]["name"]}</h2>
-                <h2 class="pokemonName">#${x}</h2>
-            </div>
-            <div class="openCardImg">
-                <img src="${allRendertPokemon[i]["sprites"]["other"]["official-artwork"]["front_default"]}">
-            </div>
-        </div>
-
-        <div class="infoContainer">
-            <div class="infoContainerHeader">
-                <a>About</a>
-                <a onclick="openStats(${i})">Stats</a>
-            </div>
-            <div class="PokemonInfo" id="PokemonInfo">
-
-                <table class="InfoTable">
-                    <tr>
-                        <td>Species</td>
-                        <td>${allRendertPokemon[i]["types"]["0"]["type"]["name"]}</td>
-                    </tr>
-                    <tr>
-                        <td>Height</td>
-                        <td>${allRendertPokemon[i]["height"]}</td>
-                    </tr>
-                    <tr>
-                        <td>Weight</td>
-                        <td>${allRendertPokemon[i]["weight"]}</td>
-                    </tr>
-                    <tr>
-                        <td>Abilities</td>
-                        <td id="ability${i}"></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    <div>
-`;
-}
-
-function generateOpenCardAgain(i) {
-  let x = i + 1;
-  return /*html*/ `
-<div class="openCardBackground" onclick="openCard(${i})"></div>
-<div id="openCard" class="hoverPointer pokemonCard">
-  <div>
-    <div class="pokemonHeader pokemonHeader${i}" id="pokemonHeader${i}">
-      <div class="pokemonCardHeader">
-        <h2 class="pokemonName">${allRendertPokemon[i]["name"]}</h2>
-        <h2 class="pokemonName">#${x}</h2>
-      </div>
-      <div class="openCardImg">
-        <img
-        src="${allRendertPokemon[i]["sprites"]["other"]["official-artwork"]["front_default"]}">
-      </div>
-    </div>
-
-    <div class="infoContainer">
-      <div class="infoContainerHeader">
-        <a>About</a>
-        <a onclick="openStats(${i})">Stats</a>
-      </div>
-      <div class="PokemonInfo" id="PokemonInfo">
-        <table class="InfoTable">
-          <tr>
-            <td>Species</td>
-            <td>${allRendertPokemon[i]["types"]["0"]["type"]["name"]}</td>
-          </tr>
-          <tr>
-            <td>Height</td>
-            <td>${allRendertPokemon[i]["height"]}</td>
-          </tr>
-          <tr>
-            <td>Weight</td>
-            <td>${allRendertPokemon[i]["weight"]}</td>
-          </tr>
-          <tr>
-            <td>Abilities</td>
-            <td id="ability${i}"></td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <div></div>
-  </div>
-</div>
-`;
-}
-
-function generateOpenCardStats(i) {
-  let x = i + 1;
-  return /*html*/ `
-    <div class="openCardBackground" onclick="openCard(${i})"></div>
-<div id="openCard" class="hoverPointer pokemonCard">
-    <div>
-        <div class="pokemonHeader pokemonHeader${i}" id="pokemonHeader${i}">
-            <div class="pokemonCardHeader">
-                <h2 class="pokemonName">${allRendertPokemon[i]["name"]}</h2>
-                <h2 class="pokemonName">#${x}</h2>
-            </div>
-            <div class="openCardImg">
-                <img src="${allRendertPokemon[i]["sprites"]["other"]["official-artwork"]["front_default"]}">
-            </div>
-        </div>
-
-        <div class="infoContainer">
-            <div class="infoContainerHeader">
-                <a  onclick="openAbout(${i})">About</a>
-                <a>Stats</a>
-            </div>
-            <div class="PokemonInfo" id="PokemonInfo">
-            <canvas id="myChart">
-            </div>
-        </div>
-    <div>
-`;
+function gramToKilogram(gram) {
+  var kilogram = gram / 10;
+  return kilogram;
 }
 
 function addBackgroundColor(i) {
@@ -261,9 +108,9 @@ function loadMorePokemon() {
 }
 
 function search() {
-  let search = document.getElementById("search").value;
+  let search = document.getElementById("search").value.toLowerCase();
   for (let i = 0; i < allRendertPokemon.length; i++) {
-    let name = allRendertPokemon[i]["name"];
+    let name = allRendertPokemon[i]["name"].toLowerCase();
     if (name.includes(search)) {
       document.getElementById(`pokemonCard${i}`).classList.remove("d-none");
     } else {
@@ -296,6 +143,20 @@ function canvas(i) {
             allRendertPokemon[i]["stats"]["4"]["base_stat"],
           ],
           borderWidth: 1,
+          backgroundColor: [
+            "rgba(75, 192, 192, 0.2)",
+            "rgba(255, 99, 132, 0.2)",
+            "rgba(54, 162, 235, 0.2)",
+            "rgba(255, 159, 64, 0.2)",
+            "rgba(255, 205, 86, 0.2)",
+          ],
+          borderColor: [
+            "rgb(75, 192, 192)",
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 159, 64)",
+            "rgb(255, 205, 86)",
+          ],
         },
       ],
     },
@@ -322,8 +183,4 @@ function openMenu() {
   } else {
     menu.classList.add("d-none");
   }
-}
-
-function test() {
-  console.log("test");
 }
