@@ -10,7 +10,9 @@ function init() {
 }
 
 async function loadPokemon() {
+  let button = document.getElementById("loadMore");
   if (waiting == false) {
+    button.disabled = true;
     waiting = true;
     for (let i = currentPokemonCount; i < rendertPokemon; i++) {
       if (i < 1026) {
@@ -20,8 +22,10 @@ async function loadPokemon() {
         allRendertPokemon.push(currentPokemon);
         renderPokemonInfo(i);
         search();
+        currentPokemonCount++;
       }
     }
+    button.disabled = false;
     waiting = false;
   }
 }
@@ -46,22 +50,22 @@ function addAbilities(i) {
   }
 }
 
-async function openCard(i) {
-  document.getElementById(`pokemonCard${i}`).innerHTML = generateOpenCard(i);
-  let element = document.getElementById(`pokemonCard${i}`);
+function openCard(i) {
+  let openCard = document.getElementById(`openCard`);
+  openCard.innerHTML = generateOpenCard(i);
+  openCard.classList.remove("d-none");
+  addAbilities(i);
   addBackgroundColor(i);
-  if (element.classList.contains("openCardStyle")) {
-    element.classList.remove("openCardStyle");
-    element.innerHTML = "";
-    renderPokemonAgain(i);
-    search();
-  } else {
-    addAbilities(i);
-    element.classList.add("openCardStyle");
-  }
+  openCard.classList.remove("d-none");
 }
+
+function closeCard() {
+  let openCard = document.getElementById(`openCard`);
+  openCard.classList.add("d-none");
+}
+
 function openStats(i) {
-  let content = document.getElementById(`pokemonCard${i}`);
+  let content = document.getElementById(`openCard`);
   content.innerHTML = "";
   content.innerHTML = generateOpenCardStats(i);
   addBackgroundColor(i);
@@ -69,8 +73,7 @@ function openStats(i) {
 }
 
 function openAbout(i) {
-  document.getElementById(`pokemonCard${i}`).innerHTML =
-    generateOpenCardAgain(i);
+  document.getElementById(`openCard`).innerHTML = generateOpenCardAgain(i);
   addBackgroundColor(i);
   addAbilities(i);
 }
@@ -103,7 +106,6 @@ function addBackgroundColor(i) {
 
 function loadMorePokemon() {
   rendertPokemon += 20;
-  currentPokemonCount += 20;
   loadPokemon();
 }
 
@@ -117,6 +119,74 @@ function search() {
       document.getElementById(`pokemonCard${i}`).classList.add("d-none");
     }
   }
+}
+
+function nextCard(i, direction) {
+  if (direction === "-") {
+    i = i - 1;
+  } else if (direction === "+") {
+    i = i + 1;
+  }
+
+  openCard(i);
+}
+
+function addNextButton(i) {
+  let lastPokemonNumber = currentPokemonCount - 2;
+  console.log(lastPokemonNumber, i);
+  if (lastPokemonNumber > i) {
+    return /*html*/ `
+            <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="SVGRepo_iconCarrier">
+            <path
+              d="M10 7L15 12L10 17"
+              stroke="#000000"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </g>
+        </svg>
+    `;
+  } else {
+    return /*html*/ `
+    `;
+  }
+}
+
+function addlastButton(i) {
+  if (i > 0) {
+    return /*html*/ `
+          <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            <path
+              d="M15 7L10 12L15 17"
+              stroke="#000000"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </g>
+        </svg>
+    `;
+  } else {
+    return /*html*/ ``;
+  }
+  console.log(i);
 }
 
 function canvas(i) {
