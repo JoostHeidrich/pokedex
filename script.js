@@ -133,7 +133,6 @@ function nextCard(i, direction) {
 
 function addNextButton(i) {
   let lastPokemonNumber = currentPokemonCount - 2;
-  console.log(lastPokemonNumber, i);
   if (lastPokemonNumber > i) {
     return /*html*/ `
             <svg
@@ -186,7 +185,6 @@ function addlastButton(i) {
   } else {
     return /*html*/ ``;
   }
-  console.log(i);
 }
 
 function canvas(i) {

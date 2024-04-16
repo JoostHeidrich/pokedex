@@ -166,7 +166,7 @@ function generateOpenCardAgain(i) {
                           <td>${gramToKilogram(
                             `${allRendertPokemon[i]["weight"]}`
                           )}kg</td>
-                      </tr>
+                        </tr>
                       <tr>
                           <td>Abilities</td>
                           <td id="ability${i}">${
